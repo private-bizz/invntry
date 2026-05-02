@@ -14,7 +14,7 @@ jobs:
       - name: Fetch Data from Apps Script
         run: |
           # Replace the URL below with your actual Google Apps Script Web App URL
-          curl -L "https://script.google.com/macros/s/AKfycbyRsV37oedTFMWhQjlbsgQXh9g4o1ZgRCVkfeNq7wSSTUh7lPROAX8ebMdXAa1ZYhKj/exec" -o products.json
+          curl -L "https://script.google.com/macros/s/AKfycbxcRzCj4QwD5UQKnjhGAsXxp5L_DumU0PP5fmUlvkLl0qwxt0CUEOXNeEDEGFev8zE9AA/exec" -o products.json
 
       - name: Commit and Push if changed
         run: |

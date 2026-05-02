@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Hero Section -->
+    <header class="bg-white py-12 text-center border-b">
+        <h1 class="text-4xl font-extrabold tracking-tight text-gray-900">Our Curated Collection</h1>
+        <p class="mt-4 text-lg text-gray-500">Handpicked items, just for you.</p>
+    </header>
+
+    <!-- Product Grid -->
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Products will be injected here -->
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="orderModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg p-8 max-w-sm w-full shadow-2xl">
+            <h2 class="text-xl font-bold mb-4">Almost there!</h2>
+            <p class="text-gray-600 mb-4">Enter your name to proceed to purchase.</p>
+            <input type="text" id="userName" placeholder="Your Name" class="w-full border p-3 rounded mb-4 outline-none focus:ring-2 focus:ring-black">
+            <button onclick="finalizeOrder()" class="w-full bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-800 transition">Complete Order</button>
+        </div>
+    </div>
+
+    <script>
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyRsV37oedTFMWhQjlbsgQXh9g4o1ZgRCVkfeNq7wSSTUh7lPROAX8ebMdXAa1ZYhKj/exec";
+        let selectedProduct = null;
+
+        // Fetch products from the static JSON file
+        async function loadProducts() {
+            const res = await fetch('./products.json');
+            const products = await res.json();
+            const grid = document.getElementById('product-grid');
+
+            grid.innerHTML = products.map(p => `
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border">
+                    <img src="${p.Image_URL}" alt="${p.Name}" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold">${p.Name}</h3>
+                        <p class="text-gray-500 text-sm mt-1">${p.Description}</p>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-xl font-black">$${p.Price}</span>
+                            <button onclick="openModal('${p.Name}', '${p.Price}')" class="bg-black text-white px-4 py-2 rounded-lg text-sm font-medium">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openModal(name, price) {
+            selectedProduct = { name, price };
+            document.getElementById('orderModal').classList.remove('hidden');
+        }
+
+        async function finalizeOrder() {
+            const name = document.getElementById('userName').value;
+            if (!name) return alert("Please enter your name");
+
+            // 1. Send Lead to Google Sheets (Background)
+            fetch(APPS_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors", // Crucial for Apps Script
+                body: JSON.stringify({
+                    userName: name,
+                    productName: selectedProduct.name,
+                    price: selectedProduct.price
+                })
+            });
+
+            // 2. Immediate WhatsApp Handoff
+            const phone = "23490057835662"; // Format: 2348012345678
+            const message = `Hi! My name is ${name}. I want to buy the ${selectedProduct.name} for $${selectedProduct.price}.`;
+            window.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+        }
+
+        loadProducts();
+    </script>
+</body>
+</html>

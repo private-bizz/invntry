@@ -3,36 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Collection</title>
+    <title>THE ELYSIAN | Exclusive Collection</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 text-gray-900 font-sans">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .serif { font-family: 'Bodoni Moda', serif; }
+        
+        /* Soft Glow Effect */
+        .product-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .product-card:hover {
+            border-color: rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05), 0 0 20px rgba(0,0,0,0.02);
+            transform: translateY(-5px);
+        }
 
-    <header class="bg-white border-b py-8 px-6 text-center">
-        <h1 class="text-3xl font-black uppercase tracking-tighter italic">The Master Feed</h1>
+        /* Glassmorphism for Badges */
+        .glass-badge {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Luxury Gradient Button */
+        .btn-luxury {
+            background: #1a1a1a;
+            transition: all 0.3s ease;
+        }
+        .btn-luxury:hover:not(:disabled) {
+            background: #333;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body class="bg-[#fafafa] text-[#1a1a1a]">
+
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
+            <div class="flex flex-col">
+                <span class="serif text-2xl font-bold tracking-widest uppercase">Elysian</span>
+                <span class="text-[10px] tracking-[0.3em] uppercase text-gray-400">Atelier de Luxe</span>
+            </div>
+            
+            <div class="h-10 w-10 bg-black rounded-full flex items-center justify-center shadow-lg">
+                <span class="text-white serif text-xl">E</span>
+            </div>
+        </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-6 py-12">
-        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-            <div class="col-span-full text-center py-20 text-gray-400">Updating inventory...</div>
+    <section class="py-20 px-8 text-center bg-white">
+        <h2 class="serif text-4xl md:text-6xl mb-4 italic">The Spring Edit</h2>
+        <p class="text-gray-400 uppercase tracking-[0.2em] text-xs">Curated Excellence • Limited Release</p>
+    </section>
+
+    <main class="max-w-7xl mx-auto px-8 pb-24">
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            <div class="col-span-full text-center py-20 animate-pulse text-gray-300 tracking-widest uppercase text-xs">Awaiting Inventory...</div>
         </div>
     </main>
 
-    <div id="orderModal" class="fixed inset-0 bg-black/70 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl p-10 max-w-md w-full shadow-2xl">
-            <h3 class="text-2xl font-bold mb-2">Secure Your Order</h3>
-            <p class="text-gray-500 mb-6 text-sm">Please enter your name to continue to WhatsApp.</p>
-            <input type="text" id="userName" placeholder="Full Name" class="w-full border-2 bg-gray-50 p-4 rounded-xl mb-6 outline-none focus:border-black transition-all">
-            <div class="flex gap-4">
-                <button onclick="closeModal()" class="flex-1 font-bold text-gray-400">Cancel</button>
-                <button onclick="finalizeOrder()" class="flex-2 bg-black text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-black/20">Send Order</button>
+    <div id="orderModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white p-10 max-w-md w-full rounded-none shadow-2xl border border-gray-100">
+            <h3 class="serif text-3xl mb-2 text-center">Inquiry</h3>
+            <p class="text-center text-gray-400 text-sm mb-8 uppercase tracking-widest">Connect with our Concierge</p>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="text-[10px] uppercase tracking-widest text-gray-400 block mb-2">Your Name</label>
+                    <input type="text" id="userName" placeholder="EX: ALEXANDER REED" class="w-full border-b-2 border-gray-100 p-3 outline-none focus:border-black transition-all bg-transparent text-sm">
+                </div>
+                <div class="flex flex-col gap-4 pt-4">
+                    <button onclick="finalizeOrder()" class="bg-black text-white py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-gray-800 transition-all">Continue to WhatsApp</button>
+                    <button onclick="closeModal()" class="text-[10px] uppercase tracking-widest text-gray-300 hover:text-black transition-all">Close</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxFpHtzmPjJ7zibs988oGaqPA8FDemLByFBYoog7LK9kjplqURgv23k6Rpg3iEGtmdVCA/exec"; 
-        const WHATSAPP_NUMBER = "2349057835662"; // Replace with your client's number
+        const APPS_SCRIPT_URL = "PASTE_YOUR_WEB_APP_URL_HERE"; 
+        const WHATSAPP_NUMBER = "2348000000000"; 
         let selectedProduct = null;
 
         async function loadProducts() {
@@ -43,41 +97,38 @@
 
                 grid.innerHTML = products.map(p => {
                     const stock = parseInt(p.Stock) || 0;
-                    let btnText, btnClass, isClickable = true;
+                    let statusLabel = "";
+                    let isSoldOut = stock === 0;
+                    
+                    // Status Logic for the Badge
+                    if (stock === 0) statusLabel = "Sold Out";
+                    else if (stock <= 5) statusLabel = `${stock} Units Remaining`;
+                    else statusLabel = "In Stock";
 
-                    // STOCK LOGIC
-                    if (stock === 0) {
-                        btnText = "SOLD OUT";
-                        btnClass = "bg-gray-200 text-gray-400 cursor-not-allowed";
-                        isClickable = false;
-                    } else if (stock >= 1 && stock <= 5) {
-                        btnText = `${stock} ${stock === 1 ? 'UNIT' : 'UNITS'} REMAINING`;
-                        btnClass = "bg-orange-500 text-white shadow-orange-200";
-                    } else {
-                        btnText = "ORDER NOW";
-                        btnClass = "bg-black text-white shadow-gray-200";
-                    }
-
-                    // IMAGE LINK FIX
+                    // Drive Image Fix
                     let imgUrl = p.Image_URL;
                     const driveIdMatch = imgUrl.match(/[-\w]{25,}/);
-                    if (driveIdMatch) {
-                        imgUrl = `https://lh3.googleusercontent.com/d/${driveIdMatch[0]}`;
-                    }
+                    if (driveIdMatch) imgUrl = `https://lh3.googleusercontent.com/d/${driveIdMatch[0]}`;
 
                     return `
-                    <div class="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm transition-all group">
-                        <div class="h-80 overflow-hidden bg-gray-100">
-                            <img src="${imgUrl}" alt="${p.Name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400?text=Check+Drive+Permissions'">
-                        </div>
-                        <div class="p-8">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="text-xl font-bold italic uppercase">${p.Name}</h3>
-                                <span class="text-xl font-black">₦${p.Price}</span>
+                    <div class="product-card group relative bg-white overflow-hidden">
+                        <div class="aspect-[4/5] overflow-hidden bg-gray-50 relative">
+                            <img src="${imgUrl}" alt="${p.Name}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" onerror="this.src='https://placehold.co/600x800/white/eaeaea?text=Fine+Art'">
+                            
+                            <div class="absolute bottom-4 right-4 glass-badge px-3 py-1 text-[9px] font-bold uppercase tracking-widest ${isSoldOut ? 'text-red-400' : 'text-gray-600'}">
+                                ${statusLabel}
                             </div>
-                            <p class="text-gray-400 text-xs mb-6 leading-relaxed uppercase tracking-widest">${p.Description}</p>
-                            <button ${isClickable ? `onclick="openModal('${p.Name}', '${p.Price}')"` : 'disabled'} class="w-full py-4 rounded-xl font-black uppercase tracking-tighter text-sm shadow-xl transition-all ${btnClass}">
-                                ${btnText}
+                        </div>
+
+                        <div class="p-8 text-center">
+                            <h3 class="serif text-xl mb-1">${p.Name}</h3>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-4 h-10 overflow-hidden">${p.Description}</p>
+                            <p class="serif text-lg mb-6">₦${Number(p.Price).toLocaleString()}</p>
+                            
+                            <button 
+                                ${isSoldOut ? 'disabled' : `onclick="openModal('${p.Name}', '${p.Price}')"`}
+                                class="w-full py-4 text-[10px] font-bold uppercase tracking-[0.3em] transition-all border ${isSoldOut ? 'bg-gray-50 text-gray-300 border-gray-100 cursor-not-allowed' : 'bg-black text-white border-black hover:bg-white hover:text-black'}">
+                                ${isSoldOut ? 'Sold Out' : 'Order Now'}
                             </button>
                         </div>
                     </div>`;
@@ -85,18 +136,23 @@
             } catch (e) { console.error(e); }
         }
 
-        function openModal(n, p) { selectedProduct = {n, p}; document.getElementById('orderModal').classList.remove('hidden'); }
+        function openModal(n, p) { 
+            selectedProduct = {n, p}; 
+            const m = document.getElementById('orderModal');
+            m.classList.remove('hidden');
+        }
+
         function closeModal() { document.getElementById('orderModal').classList.add('hidden'); }
 
-        function finalizeOrder() {
+        async function finalizeOrder() {
             const name = document.getElementById('userName').value.trim();
             if (!name) return;
             fetch(APPS_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify({ userName: name, productName: selectedProduct.n, price: selectedProduct.p })});
-            const msg = `Hi! I'm ${name}. I'd like to order ${selectedProduct.n} (₦${selectedProduct.p}).`;
+            const msg = `Greetings. I am ${name}. I wish to acquire the ${selectedProduct.n} (₦${selectedProduct.p}).`;
             window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
         }
+
         loadProducts();
     </script>
 </body>
 </html>
-
